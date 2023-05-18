@@ -1,6 +1,12 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using TestDb.Interfaces;
+using TestDb.Models;
+using TestDB.MsSql;
+using TestDB.MsSql.Services;
+
 
 namespace TestDbApp
 {
@@ -8,7 +14,7 @@ namespace TestDbApp
     {
         static void Main(string[] args)
         {
-            #region Подключение БД
+            #region --------------------Подключение БД--------------------
 
             var conectionString = new ConfigurationBuilder()
                .SetBasePath(Directory.GetCurrentDirectory())
@@ -21,11 +27,21 @@ namespace TestDbApp
 
             if (connection.State == ConnectionState.Open) Console.WriteLine("Соединение с БД установленно"); //HACK временная проверка!
 
-            connection.Close();
+            #endregion --------------------Подключение БД--------------------
 
-            #endregion Подключение БД
+            #region --------------------Контейнер и сервисы--------------------
 
-            #region Обработка аргументов
+            var services = new ServiceCollection();
+
+            services.AddDbServices();
+
+            var serviceProvider = services.BuildServiceProvider();
+
+            var DbService = serviceProvider.GetService<IDbService>();
+
+            #endregion --------------------Контейнер и сервисы--------------------
+
+            #region --------------------Обработка аргументов--------------------
 
             if (args.Length == 0)
             {
@@ -47,6 +63,7 @@ namespace TestDbApp
                 switch (intArg)
                 {
                     case 1:
+                        DbService.AddTable("Добавлена таблица 1");
                         Console.WriteLine(intArg);
                         Console.ReadKey();
                         break;
@@ -95,8 +112,9 @@ namespace TestDbApp
                 Console.WriteLine(ex.Message);
                 throw;
             }
-        }   
-
-        #endregion Обработка аргументов
+            #endregion --------------------Обработка аргументов--------------------
+            
+            if(connection.State  == ConnectionState.Open) connection.Dispose();
+        }
     }
 }
