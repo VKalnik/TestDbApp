@@ -1,9 +1,32 @@
-﻿namespace TestDbApp
+﻿using Microsoft.Extensions.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace TestDbApp
 {
     internal class Program
     {
         static void Main(string[] args)
         {
+            #region Подключение БД
+
+            var conectionString = new ConfigurationBuilder()
+               .SetBasePath(Directory.GetCurrentDirectory())
+               .AddJsonFile("appsettings.json")
+               .Build().GetConnectionString("TestDB");
+
+            SqlConnection connection = new SqlConnection(conectionString);
+
+            connection.Open();
+
+            if (connection.State == ConnectionState.Open) Console.WriteLine("Соединение с БД установленно"); //HACK временная проверка!
+
+            connection.Close();
+
+            #endregion Подключение БД
+
+            #region Обработка аргументов
+
             if (args.Length == 0)
             {
                 Console.WriteLine("Отсутствуют аргументы, запуск не возможен!");
@@ -72,6 +95,8 @@
                 Console.WriteLine(ex.Message);
                 throw;
             }
-        }
+        }   
+
+        #endregion Обработка аргументов
     }
 }
