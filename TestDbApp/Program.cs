@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 using TestDb.Interfaces;
 using TestDb.Models;
 using TestDB.MsSql;
@@ -14,28 +12,18 @@ namespace TestDbApp
     {
         static void Main(string[] args)
         {
+            var conectionString = new ConfigurationBuilder()
+               .SetBasePath(Directory.GetCurrentDirectory())
+               .AddJsonFile("appsettings.json")
+               .Build().GetConnectionString("TestDB");
+
             if (args.Length == 0)
             {
                 Console.WriteLine("Отсутствуют аргументы, запуск не возможен!");
                 Console.ReadKey();
                 return;
             }
-
-            #region --------------------Подключение БД--------------------
-
-            var conectionString = new ConfigurationBuilder()
-               .SetBasePath(Directory.GetCurrentDirectory())
-               .AddJsonFile("appsettings.json")
-               .Build().GetConnectionString("TestDB");
-
-            SqlConnection connection = new SqlConnection(conectionString);
-
-            connection.Open();
-
-            if (connection.State == ConnectionState.Open) Console.WriteLine("Соединение с БД установленно"); //HACK временная проверка!
-
-            #endregion --------------------Подключение БД--------------------
-
+            
             #region --------------------Контейнер и сервисы--------------------
 
             var services = new ServiceCollection();
@@ -44,7 +32,7 @@ namespace TestDbApp
 
             var serviceProvider = services.BuildServiceProvider();
 
-            var DbService = serviceProvider.GetService<IDbService>();
+            var dbService = serviceProvider.GetService<IDbService>();
 
             #endregion --------------------Контейнер и сервисы--------------------
 
@@ -63,7 +51,7 @@ namespace TestDbApp
                 switch (intArg)
                 {
                     case 1:
-                        DbService.AddTable(connection);
+                        dbService.AddTable(conectionString);
                         Console.WriteLine(intArg);
                         Console.ReadKey();
                         break;
@@ -86,7 +74,7 @@ namespace TestDbApp
                                 Gender = args[5]
                             };
 
-                            DbService.AddRow(connection, person);
+                            dbService.AddRow(conectionString, person);
                         }
                         break;
 
@@ -118,9 +106,6 @@ namespace TestDbApp
                 throw;
             }
             #endregion --------------------Обработка аргументов--------------------
-            
-            if(connection.State  == ConnectionState.Open) connection.Dispose();
         }
-
     }
 }

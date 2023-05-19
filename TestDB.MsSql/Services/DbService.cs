@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using TestDb.Interfaces;
 using TestDb.Models;
 using TestDB.MsSql.Properties;
@@ -12,30 +11,43 @@ namespace TestDB.MsSql.Services
 {
     internal class DbService : IDbService
     {
-        public void AddTable(SqlConnection connection)
+        public void AddTable(string connectionString)
         {
-            SqlCommand command = new SqlCommand(Resources.Sql_AddPersonsTable, connection);
-            command.ExecuteNonQuery();
+            using var connection = new SqlConnection(connectionString);
+            {
+                connection.Open();
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = Resources.Sql_AddPersonsTable;
+                    cmd.ExecuteNonQuery();
+                }
+            };
         }
 
-        public void AddRow(SqlConnection connection, Person person)
+        public void AddRow(string connectionString, Person person)
         {
-            SqlCommand command = new SqlCommand(Resources.Sql_Insert, connection);
-
-            command.Parameters.AddWithValue("last_name", person.LastName);
-            command.Parameters.AddWithValue("first_name", person.FirstName);
-            command.Parameters.AddWithValue("patronymic", person.Patronymic);
-            command.Parameters.AddWithValue("birthdate", person.BirthDate.ToString("dd.MM.yyyy"));
-            command.Parameters.AddWithValue("gender", person.Gender);
-            command.ExecuteNonQuery();
+            using var connection = new SqlConnection(connectionString);
+            {
+                connection.Open();
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = Resources.Sql_Insert;
+                    cmd.Parameters.AddWithValue("last_name", person.LastName);
+                    cmd.Parameters.AddWithValue("first_name", person.FirstName);
+                    cmd.Parameters.AddWithValue("patronymic", person.Patronymic);
+                    cmd.Parameters.AddWithValue("birthdate", person.BirthDate.ToString("dd.MM.yyyy"));
+                    cmd.Parameters.AddWithValue("gender", person.Gender);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
-        public void AddRows(SqlConnection connection, Person[] persons)
+        public void AddRows(string connectionString, Person[] persons)
         {
             throw new NotImplementedException();
         }
 
-        public Person[] Select(SqlConnection connection, string expression)
+        public Person[] Select(string connectionString, string expression)
         {
             throw new NotImplementedException();
         }
