@@ -1,0 +1,2 @@
+﻿INSERT INTO Persons (last_name,  first_name,  patronymic,  birthdate,  gender)
+			VALUES (@last_name, @first_name, @patronymic, @birthdate, @gender)

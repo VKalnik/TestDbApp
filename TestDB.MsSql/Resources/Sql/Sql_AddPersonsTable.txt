@@ -1,0 +1,10 @@
+﻿CREATE TABLE Persons
+(
+	Id int IDENTITY(1,1) NOT NULL,
+	last_name varchar(100) NOT NULL,
+	first_name varchar(100) NOT NULL,
+	patronymic varchar(100) NOT NULL,
+	birthdate varchar(20) NOT NULL,
+	gender varchar(1) NOT NULL,
+	PRIMARY KEY	(id)
+);
