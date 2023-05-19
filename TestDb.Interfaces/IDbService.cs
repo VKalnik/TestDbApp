@@ -1,14 +1,15 @@
-﻿using TestDb.Models;
+﻿using System.Data.SqlClient;
+using TestDb.Models;
 
 namespace TestDb.Interfaces
 {
     public interface IDbService
     {
-        void AddTable(string connectionString);
+        void AddTable(SqlConnection connection);
 
-        void AddRow(string connectionString, Person person);
+        void AddRow(SqlConnection connection, Person person);
 
-        void AddRows(string connectionString, Person[] persons);
-        Person[] Select(string connectionString, string expression);
+        void AddRows(SqlConnection connection, Person[] persons);
+        Person[] Select(SqlConnection connection, string expression);
     }
 }
