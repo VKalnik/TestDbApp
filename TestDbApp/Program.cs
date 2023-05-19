@@ -14,6 +14,13 @@ namespace TestDbApp
     {
         static void Main(string[] args)
         {
+            if (args.Length == 0)
+            {
+                Console.WriteLine("Отсутствуют аргументы, запуск не возможен!");
+                Console.ReadKey();
+                return;
+            }
+
             #region --------------------Подключение БД--------------------
 
             var conectionString = new ConfigurationBuilder()
@@ -43,13 +50,6 @@ namespace TestDbApp
 
             #region --------------------Обработка аргументов--------------------
 
-            if (args.Length == 0)
-            {
-                Console.WriteLine("Отсутствуют аргументы, запуск не возможен!");
-                Console.ReadKey();
-                return;
-            }
-
             try
             {
                 int intArg;
@@ -63,13 +63,12 @@ namespace TestDbApp
                 switch (intArg)
                 {
                     case 1:
-                        DbService.AddTable("Добавлена таблица 1");
+                        DbService.AddTable(connection);
                         Console.WriteLine(intArg);
                         Console.ReadKey();
                         break;
 
                     case 2:
-
                         if (args.Length != 6)
                         {
                             Console.WriteLine("Не верное количество или формат введённых аргументов, запуск не возможен!\n"
@@ -78,11 +77,17 @@ namespace TestDbApp
                         }
                         else
                         {
-                            foreach (var el in args)
-                                Console.Write(el + " ");
-                            Console.ReadKey();
-                        }
+                            var person = new Person
+                            {
+                                LastName = args[1],
+                                FirstName = args[2],
+                                Patronymic = args[3],
+                                BirthDate = DateTime.Parse(args[4]),
+                                Gender = args[5]
+                            };
 
+                            DbService.AddRow(connection, person);
+                        }
                         break;
 
                     case 3:
@@ -116,5 +121,6 @@ namespace TestDbApp
             
             if(connection.State  == ConnectionState.Open) connection.Dispose();
         }
+
     }
 }
