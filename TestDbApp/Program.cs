@@ -55,8 +55,6 @@ namespace TestDbApp
                 {
                     case 1:
                         dbService.AddTable(conectionString);
-                        Console.WriteLine(intArg);
-                        Console.ReadKey();
                         break;
 
                     case 2:
@@ -87,8 +85,8 @@ namespace TestDbApp
                         break;
 
                     case 4:
-                        Console.WriteLine(intArg);
-                        Console.ReadKey();
+                        var persons = testDataService.GetRandomPersons(1000);
+                        dbService.AddRows(conectionString, persons);
                         break;
 
                     case 5:

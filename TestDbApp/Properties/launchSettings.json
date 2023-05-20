@@ -1,8 +1,7 @@
 {
   "profiles": {
     "TestDbApp": {
-      "commandName": "Project",
-      "commandLineArgs": "2 Ivanov Ivan Ivanovich 12.09.1930 M"
+      "commandName": "Project"
     }
   }
 }
