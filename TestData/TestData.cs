@@ -103,7 +103,7 @@ namespace TestData
         {
             var persons = new Person[amount];
 
-            for (int i = 0; i < amount - 1; i++)
+            for (int i = 0; i < amount; i++)
             {
                 persons[i] = new Person
                 {
