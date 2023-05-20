@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDbApp", "TestDbApp\TestDbApp.csproj", "{AD4110BF-CE7F-4F6B-9C01-D7128077023C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestDbApp", "TestDbApp\TestDbApp.csproj", "{AD4110BF-CE7F-4F6B-9C01-D7128077023C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDb.Interfaces", "TestDb.Interfaces\TestDb.Interfaces.csproj", "{F50C5952-9003-4C0B-A83B-6C4030422381}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestDb.Interfaces", "TestDb.Interfaces\TestDb.Interfaces.csproj", "{F50C5952-9003-4C0B-A83B-6C4030422381}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDB.MsSql", "TestDB.MsSql\TestDB.MsSql.csproj", "{C478D3A6-F5BD-4471-A58D-CFFD0D38BDEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestDB.MsSql", "TestDB.MsSql\TestDB.MsSql.csproj", "{C478D3A6-F5BD-4471-A58D-CFFD0D38BDEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDb.Models", "TestDb.Models\TestDb.Models.csproj", "{7640F700-56B0-457A-83EF-4451AEF3375C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestDb.Models", "TestDb.Models\TestDb.Models.csproj", "{7640F700-56B0-457A-83EF-4451AEF3375C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestData", "TestData\TestData.csproj", "{1A837CDA-C549-48D4-BACD-14F35D1B9B43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{7640F700-56B0-457A-83EF-4451AEF3375C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7640F700-56B0-457A-83EF-4451AEF3375C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7640F700-56B0-457A-83EF-4451AEF3375C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A837CDA-C549-48D4-BACD-14F35D1B9B43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A837CDA-C549-48D4-BACD-14F35D1B9B43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A837CDA-C549-48D4-BACD-14F35D1B9B43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A837CDA-C549-48D4-BACD-14F35D1B9B43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

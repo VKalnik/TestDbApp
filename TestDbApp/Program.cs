@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using TestData;
 using TestDb.Interfaces;
 using TestDb.Models;
 using TestDB.MsSql;
@@ -23,16 +24,18 @@ namespace TestDbApp
                 Console.ReadKey();
                 return;
             }
-            
+
             #region --------------------Контейнер и сервисы--------------------
 
             var services = new ServiceCollection();
 
-            services.AddDbServices();
+            services.AddDbServices()
+                    .AddTestDataServices();
 
             var serviceProvider = services.BuildServiceProvider();
 
             var dbService = serviceProvider.GetService<IDbService>();
+            var testDataService = serviceProvider.GetService<ITestData>();
 
             #endregion --------------------Контейнер и сервисы--------------------
 
@@ -98,7 +101,6 @@ namespace TestDbApp
                         Console.ReadKey();
                         break;
                 }
-
             }
             catch (Exception ex)
             {

@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TestData\TestData.csproj" />
     <ProjectReference Include="..\TestDb.Interfaces\TestDb.Interfaces.csproj" />
     <ProjectReference Include="..\TestDb.Models\TestDb.Models.csproj" />
     <ProjectReference Include="..\TestDB.MsSql\TestDB.MsSql.csproj" />
