@@ -124,13 +124,13 @@ namespace TestData
         /// Возвращает случайное значение имени
         /// </summary>
         /// <returns>Случайное Имя</returns>
-        private string GetRandomFirstName() => firstNames[rnd.Next(0, 25)];
+        private string GetRandomFirstName() => firstNames[rnd.Next(firstNames.Length)];
 
         /// <summary>
         /// Возвращает случайное значение отчества
         /// </summary>
         /// <returns>Случайное Отчество</returns>
-        private string GetRandomPatronymic() => patronymics[rnd.Next(0, 25)];
+        private string GetRandomPatronymic() => patronymics[rnd.Next(patronymics.Length)];
 
         /// <summary>
         /// Возвращает случайное значение фамилии
@@ -159,7 +159,7 @@ namespace TestData
         /// Возвращает случайное значение пола
         /// </summary>
         /// <returns>Случайное значение пола</returns>
-        private string GetRandomGender() => genders[rnd.Next(0, 1)];
+        private string GetRandomGender() => genders[rnd.Next(genders.Length)];
     }
 
     #endregion Вспомогательные методы
