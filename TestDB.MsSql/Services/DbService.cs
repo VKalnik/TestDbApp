@@ -1,5 +1,7 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using TestDb.Interfaces;
 using TestDb.Models;
 using TestDB.MsSql.Properties;
@@ -74,9 +76,44 @@ namespace TestDB.MsSql.Services
             }
         }
 
-        public Person[] Select(string connectionString, string expression)
+        public Person[] Select(string connectionString, string sqlCommandText)
         {
-            throw new NotImplementedException();
+            var sw = new Stopwatch();
+
+            SqlDataReader reader;
+
+            using var connection = new SqlConnection(connectionString);
+            {
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = sqlCommandText ?? Resources.Sql_BaseSelectPersons;
+
+                    connection.Open();
+                    sw.Start();
+                    reader = cmd.ExecuteReader();
+                    sw.Stop();
+                }
+            }
+
+            Console.WriteLine($"Затраченное время: {sw.ElapsedMilliseconds} миллисекунд");
+            
+            var persons = new List<Person>();
+
+            while (reader.Read())
+            {
+                var person = new Person();
+                person.Id = reader.GetInt32(0);
+                person.LastName = reader.GetString(1);
+                person.FirstName = reader.GetString(2);
+                person.Patronymic = reader.GetString(3);
+                person.BirthDate = Convert.ToDateTime(reader.GetString(4));
+                person.Gender = reader.GetString(5);
+                persons.Add(person);
+            }
+
+            reader.Close();
+
+            return persons.ToArray();
         }
     }
 }

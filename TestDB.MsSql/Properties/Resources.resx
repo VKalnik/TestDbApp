@@ -121,6 +121,9 @@
   <data name="Sql_AddPersonsTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Sql\Sql_AddPersonsTable.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="Sql_BaseSelectPersons" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sql\Sql_BaseSelectPersons.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="Sql_Insert" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Sql\Sql_Insert.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>

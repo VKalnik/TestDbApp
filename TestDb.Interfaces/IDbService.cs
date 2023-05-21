@@ -9,6 +9,6 @@ namespace TestDb.Interfaces
         void AddRow(string connectionString, Person person);
 
         void AddRows(string connectionString, Person[] persons);
-        Person[] Select(string connectionString, string expression);
+        Person[] Select(string connectionString, string sqlCommandText = null);
     }
 }

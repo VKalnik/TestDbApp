@@ -63,11 +63,11 @@ namespace TestDB.MsSql.Properties {
         /// <summary>
         ///   Ищет локализованную строку, похожую на CREATE TABLE Persons
         ///(
-        ///	Id int IDENTITY(1,1) NOT NULL,
+        ///	id int IDENTITY(1,1) NOT NULL,
+        ///	last_name varchar(100) NOT NULL,
         ///	first_name varchar(100) NOT NULL,
         ///	patronymic varchar(100) NOT NULL,
-        ///	last_name varchar(100) NOT NULL,
-        ///	birthdate varchar(10) NOT NULL,
+        ///	birthdate varchar(20) NOT NULL,
         ///	gender varchar(1) NOT NULL,
         ///	PRIMARY KEY	(id)
         ///);.
@@ -79,8 +79,17 @@ namespace TestDB.MsSql.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на INSERT INTO Persons (first_name,  patronymic,  last_name,  birthdate,  gender)
-        ///			VALUES (@first_name, @patronymic, @last_name, @birthdate, @gender).
+        ///   Ищет локализованную строку, похожую на SELECT * FROM Persons.
+        /// </summary>
+        internal static string Sql_BaseSelectPersons {
+            get {
+                return ResourceManager.GetString("Sql_BaseSelectPersons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на INSERT INTO Persons (last_name,  first_name,  patronymic,  birthdate,  gender)
+        ///			VALUES (@last_name, @first_name, @patronymic, @birthdate, @gender).
         /// </summary>
         internal static string Sql_Insert {
             get {
