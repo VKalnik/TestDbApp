@@ -8,6 +8,8 @@
         public string Patronymic { get; set; }
         public DateTime BirthDate { get; set; }
         public string Gender { get; set; }
+
+        public override string ToString() => $"ФИО: {LastName} {FirstName} {Patronymic}, Дата рождения: {BirthDate:dd.MM.yyyy}, Пол: {Gender} ";
     }
 
     public static class PersonExtension
