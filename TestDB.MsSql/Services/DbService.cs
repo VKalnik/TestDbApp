@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using TestDb.Interfaces;
@@ -8,8 +7,16 @@ using TestDB.MsSql.Properties;
 
 namespace TestDB.MsSql.Services
 {
+    /// <summary>
+    /// Класс взаимодействия с БД MS SQL.
+    /// </summary>
+    /// <seealso cref="TestDb.Interfaces.IDbService" />
     internal class DbService : IDbService
     {
+        /// <summary>
+        /// Метод добавляет таблицу [Persons] в БД.
+        /// </summary>
+        /// <param name="connectionString">Строка подключения к БД.</param>
         public void AddTable(string connectionString)
         {
             using var connection = new SqlConnection(connectionString);
@@ -24,8 +31,20 @@ namespace TestDB.MsSql.Services
             }
         }
 
+        /// <summary>
+        /// Метод добавляет строку в таблицу [Persons] в БД.
+        /// </summary>
+        /// <param name="connectionString">Строка подключения к БД.</param>
+        /// <param name="person">Объект <see cref="Person"/>.</param>
         public void AddRow(string connectionString, Person person)
         {
+            if (person is null) throw new ArgumentNullException(nameof(person));
+            if (string.IsNullOrEmpty(person.LastName)) throw new ArgumentNullException(nameof(person.LastName));
+            if (string.IsNullOrEmpty(person.FirstName)) throw new ArgumentNullException(nameof(person.FirstName));
+            if (string.IsNullOrEmpty(person.Patronymic)) throw new ArgumentNullException(nameof(person.Patronymic));
+            if (string.IsNullOrEmpty(person.BirthDate.ToString("dd.MM.yyyy"))) throw new ArgumentNullException(nameof(person.BirthDate));
+            if (string.IsNullOrEmpty(person.Gender)) throw new ArgumentNullException(nameof(person.Gender));
+
             using var connection = new SqlConnection(connectionString);
             {
                 using (var cmd = connection.CreateCommand())
@@ -43,6 +62,11 @@ namespace TestDB.MsSql.Services
             }
         }
 
+        /// <summary>
+        /// Метод пакетного добавления строк в таблицу [Persons] в БД.
+        /// </summary>
+        /// <param name="connectionString">Строка подключения к БД.</param>
+        /// <param name="persons">Массив объектов <see cref="Person"/></param>
         public void AddRows(string connectionString, Person[] persons)
         {
             var table = new DataTable();
@@ -55,6 +79,14 @@ namespace TestDB.MsSql.Services
             table.Columns.Add("gender");
 
             foreach (var person in persons)
+            {
+                if (person is null) throw new ArgumentNullException(nameof(person));
+                if (string.IsNullOrEmpty(person.LastName)) throw new ArgumentNullException(nameof(person.LastName));
+                if (string.IsNullOrEmpty(person.FirstName)) throw new ArgumentNullException(nameof(person.FirstName));
+                if (string.IsNullOrEmpty(person.Patronymic)) throw new ArgumentNullException(nameof(person.Patronymic));
+                if (string.IsNullOrEmpty(person.BirthDate.ToString("dd.MM.yyyy"))) throw new ArgumentNullException(nameof(person.BirthDate));
+                if (string.IsNullOrEmpty(person.Gender)) throw new ArgumentNullException(nameof(person.Gender));
+
                 table.Rows.Add
                 (
                     person.Id,
@@ -64,6 +96,7 @@ namespace TestDB.MsSql.Services
                     person.BirthDate.ToString("dd.MM.yyyy"),
                     person.Gender
                 );
+            }
 
             using (var connection = new SqlConnection(connectionString))
             {
@@ -76,6 +109,12 @@ namespace TestDB.MsSql.Services
             }
         }
 
+        /// <summary>
+        /// Метод возвращает массив объектов <see cref="Person"/> по заданному условию.
+        /// </summary>
+        /// <param name="connectionString">Строка подключения к БД.</param>
+        /// <param name="sqlCommandText">Текст SQL-запроса(при отсутствии возвращает результаты в соответствии с запросом по умолчанию).</param>
+        /// <returns></returns>
         public Person[] Select(string connectionString, string sqlCommandText)
         {
             var sw = new Stopwatch();
