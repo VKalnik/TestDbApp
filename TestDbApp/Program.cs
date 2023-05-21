@@ -5,6 +5,8 @@ using TestDb.Interfaces;
 using TestDb.Models;
 using TestDB.MsSql;
 using TestDB.MsSql.Services;
+using System.Linq.Expressions;
+using Microsoft.VisualBasic;
 
 
 namespace TestDbApp
@@ -43,8 +45,7 @@ namespace TestDbApp
 
             try
             {
-                int intArg;
-                if (!int.TryParse(args[0], out intArg))
+                if (!int.TryParse(args[0], out int intArg))
                 {
                     Console.WriteLine("Первый аргумент не корректный, запуск не возможен!");
                     Console.ReadKey();
@@ -80,8 +81,17 @@ namespace TestDbApp
                         break;
 
                     case 3:
-                        Console.WriteLine(intArg);
-                        Console.ReadKey();
+                        string sqlCommandText = "";
+                        
+                        var peoples = dbService.Select(conectionString);
+                        Console.Clear();
+                        foreach (Person p in peoples)
+                            Console.WriteLine($"ФИО: {p.LastName} {p.FirstName} {p.Patronymic}, "
+                                            + $"Дата рождения: {p.BirthDate:dd.MM.yyyy}, "
+                                            + $"Пол: {p.Gender}, "
+                                            + $"Полных лет: {p.GetAge()}");
+
+ 
                         break;
 
                     case 4:
