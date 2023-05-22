@@ -13,6 +13,38 @@ namespace TestData
         private static readonly Random rnd = new();
 
         /// <summary>
+        /// Список значений фамилия
+        /// </summary>
+        private readonly string[] lastNames = 
+        {
+            "Adams", "Anderson", "Allen", "Armstrong", // A
+            "Brown", "Baker", "Bell", "Bennett", // B
+            "Clark", "Carter", "Cooper", "Campbell", // C
+            "Davis", "Diaz", "Dixon", "Duncan", // D
+            "Edwards", "Evans", "Ellis", "Elliott", // E
+            "Ford", "Fisher", "Foster", "Fletcher", // F
+            "Garcia", "Gray", "Green", "Gonzalez", // G
+            "Harris", "Hall", "Hill", "Hughes", // H
+            "Jackson", "Johnson", "Jones", "James", // I
+            "King", "Kelly", "Kim", "Kennedy", // J
+            "Lee", "Lewis", "Lopez", "Long", // K
+            "Miller", "Moore", "Mitchell", "Murphy", // L
+            "Nelson", "Nguyen", "Neal", "Newton", // M
+            "O'Connor", "Owens", "Olson", "Ortega", // N
+            "Parker", "Peterson", "Price", "Powell", // O
+            "Quinn", "Quick", "Quintero", "Quezada", // P
+            "Roberts", "Rodriguez", "Reed", "Richardson", // Q
+            "Smith", "Sanders", "Scott", "Sullivan", // R
+            "Taylor", "Thomas", "Thompson", "Turner", // S
+            "Upton", "Underwood", "Urban", "Ulrich", // T
+            "Vargas", "Vaughn", "Vega", "Valdez", // U
+            "Williams", "Wilson", "Walker", "White", // V
+            "Xiong", "Xu", "Xiao", "Xu", // W
+            "Young", "Yang", "Yu", "Yates", // X
+            "Zhang", "Zimmerman", "Zimmer", "Zavala" // Y
+        };
+
+        /// <summary>
         /// Список значений - имя
         /// </summary>
         private readonly string[] firstNames =
@@ -91,6 +123,7 @@ namespace TestData
         /// Список латинских букв
         /// </summary>
         private readonly string letters = "abcdefghijklmnopqrstuvwxyz";
+        //private readonly string letters = "abcdeghijklmnopqrstuvwxyz";
 
         #endregion Переменные и словари
 
@@ -107,11 +140,12 @@ namespace TestData
             {
                 persons[i] = new Person
                 {
-                    LastName = GetRandonLastName(),
+                    LastName = GetRandomLastName(),
                     FirstName = GetRandomFirstName(),
                     Patronymic = GetRandomPatronymic(),
                     BirthDate = GetRandomBirthDate(),
                     Gender = GetRandomGender(),
+                    //Gender = "M",
                 };
             }
 
@@ -119,6 +153,12 @@ namespace TestData
         }
 
         #region Вспомогательные методы
+
+        /// <summary>
+        /// Возвращает случайное значение имени
+        /// </summary>
+        /// <returns>Случайное Имя</returns>
+        private string GetRandomLastName() => lastNames[rnd.Next(firstNames.Length)];
 
         /// <summary>
         /// Возвращает случайное значение имени
@@ -133,14 +173,15 @@ namespace TestData
         private string GetRandomPatronymic() => patronymics[rnd.Next(patronymics.Length)];
 
         /// <summary>
-        /// Возвращает случайное значение фамилии
+        /// Возвращает полностью случайный набор букв от 5 до 10 штук начиная с заглавной буквы.
         /// </summary>
-        /// <returns>Случайная Фамилия (случайный набор букв)</returns>
-        private string GetRandonLastName()
+        /// <returns>Случайная значение фамилия (случайный набор букв)</returns>
+        private string GetFullRandonLastName()
         {
             int length = rnd.Next(5, 10);
             char[] chars = new char[length];
             chars[0] = char.ToUpper(letters[rnd.Next(letters.Length)]);
+            //chars[0] = 'F';
 
             for (int i = 1; i < length; i++)
             {
