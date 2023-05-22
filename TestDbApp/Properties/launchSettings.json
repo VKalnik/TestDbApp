@@ -1,8 +1,7 @@
 {
   "profiles": {
     "TestDbApp": {
-      "commandName": "Project",
-      "commandLineArgs": "3"
+      "commandName": "Project"
     }
   }
 }
