@@ -1,6 +1,8 @@
-﻿using System.Data;
+﻿using System.Collections;
+using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using Microsoft.VisualBasic;
 using TestDb.Interfaces;
 using TestDb.Models;
 using TestDB.MsSql.Properties;
@@ -115,9 +117,10 @@ namespace TestDB.MsSql.Services
         /// <param name="connectionString">Строка подключения к БД.</param>
         /// <param name="sqlCommandText">Текст SQL-запроса(при отсутствии возвращает результаты в соответствии с запросом по умолчанию).</param>
         /// <returns></returns>
-        public Person[] Select(string connectionString, string sqlCommandText)
+        public (Person[] persons, string msg) Select(string connectionString, string sqlCommandText)
         {
             var sw = new Stopwatch();
+            string executionTime;
 
             SqlDataReader reader;
 
@@ -127,15 +130,19 @@ namespace TestDB.MsSql.Services
                 {
                     cmd.CommandText = sqlCommandText ?? Resources.Sql_BaseSelectPersons;
 
+                    connection.StatisticsEnabled = true;
                     connection.Open();
                     sw.Start();
                     reader = cmd.ExecuteReader();
+                    executionTime = connection.RetrieveStatistics()["ExecutionTime"].ToString();
                     sw.Stop();
                 }
             }
 
-            Console.WriteLine($"Затраченное время: {sw.ElapsedMilliseconds} миллисекунд");
-            
+            var msg = $"Затраченное время: \n"
+                + $"Stopwatch:{sw.ElapsedMilliseconds} миллисекунд\n"
+                + $"RetrieveStatistics: {executionTime} миллисекунд";
+
             var persons = new List<Person>();
 
             while (reader.Read())
@@ -152,7 +159,7 @@ namespace TestDB.MsSql.Services
 
             reader.Close();
 
-            return persons.ToArray();
+            return (persons.ToArray(), msg);
         }
     }
 }
